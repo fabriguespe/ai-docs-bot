@@ -79,8 +79,36 @@ run(async (context: HandlerContext) => {
     return;
   }
 
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  await new Promise((resolve) => setTimeout(resolve, 1000)); // Send initial thinking message
   await context.reply("Thinking...");
-  const apiResponse = await mockApiCall(content);
-  await context.reply(apiResponse);
+
+  // Define an array of friendly messages
+  const friendlyMessages = [
+    "Just a moment, I'm on it... (this might take up to 15 seconds)",
+    "Hang tight! Crunching the numbers... (up to 15 seconds)",
+    "One sec, working some magic here... (might take up to 15 seconds)",
+    "Give me a moment, weaving through the data... (up to 15 seconds)",
+    "Still here, just taking a moment to get everything right... (up to 15 seconds)",
+    "Hold on, making sure everything is perfect... (might take up to 15 seconds)",
+  ];
+
+  // Set up a periodic message every 5 seconds
+  const thinkingInterval = setInterval(async () => {
+    // Select a random message from the array
+    const randomMessage =
+      friendlyMessages[Math.floor(Math.random() * friendlyMessages.length)];
+    await context.reply(randomMessage);
+  }, 6000); // 5000 milliseconds = 5 seconds
+
+  try {
+    const apiResponse = await mockApiCall(content);
+    clearInterval(thinkingInterval); // Stop the periodic messages
+    await context.reply(apiResponse);
+  } catch (error) {
+    clearInterval(thinkingInterval); // Ensure to clear the interval on error as well
+    // Handle the error, for example, by sending an error message to the user
+    await context.reply(
+      "Failed to process your request. Please try again later."
+    );
+  }
 });
