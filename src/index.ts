@@ -37,11 +37,9 @@ function formatForPlainText(response: string): string {
   // Remove Markdown links and directly capture URLs to list them later
   let plainText = response.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
 
-  plainText = response.replace(
+  plainText = plainText.replace(
     /\[([^\]]+)\]\(([^)]+)\)/g,
-    (match, text, url) => {
-      return `${text} (${url})`; // Change this line to just return `text` if you don't want URLs inline
-    }
+    (match, text, url) => url
   );
 
   // Extract and remove footnotes, capturing URLs to list them
@@ -82,23 +80,32 @@ run(async (context: HandlerContext) => {
   await new Promise((resolve) => setTimeout(resolve, 1000)); // Send initial thinking message
   await context.reply("Thinking...");
 
-  // Define an array of friendly messages
-  const friendlyMessages = [
-    "Just a moment, I'm on it... (this might take up to 15 seconds)",
-    "Hang tight! Crunching the numbers... (up to 15 seconds)",
-    "One sec, working some magic here... (might take up to 15 seconds)",
-    "Give me a moment, weaving through the data... (up to 15 seconds)",
-    "Still here, just taking a moment to get everything right... (up to 15 seconds)",
-    "Hold on, making sure everything is perfect... (might take up to 15 seconds)",
-  ];
+  let countdown = 15; // Start countdown from 15 seconds
+  const intervalTime = 6000; // Interval time in milliseconds
 
-  // Set up a periodic message every 5 seconds
+  // Define a function to generate friendly messages with countdown
+  const generateFriendlyMessage = (remainingTime: number) => {
+    const messages = [
+      `Just a moment, I'm on it... (about ${remainingTime} seconds left)`,
+      `Hang tight! Crunching the numbers... (around ${remainingTime} seconds remaining)`,
+      `One sec, working some magic here... (might take another ${remainingTime} seconds)`,
+      `Give me a moment, weaving through the data... (up to ${remainingTime} seconds)`,
+      `Still here, just taking a moment to get everything right... (approximately ${remainingTime} seconds left)`,
+      `Hold on, making sure everything is perfect... (about ${remainingTime} seconds to go)`,
+    ];
+    return messages[Math.floor(Math.random() * messages.length)];
+  };
+
+  // Set up a periodic message every 6 seconds
   const thinkingInterval = setInterval(async () => {
-    // Select a random message from the array
-    const randomMessage =
-      friendlyMessages[Math.floor(Math.random() * friendlyMessages.length)];
-    await context.reply(randomMessage);
-  }, 6000); // 5000 milliseconds = 5 seconds
+    countdown -= intervalTime / 1000; // Decrease countdown by interval time in seconds
+    if (countdown <= 0) {
+      clearInterval(thinkingInterval); // Stop the interval if countdown reaches 0 or below
+    } else {
+      const randomMessage = generateFriendlyMessage(countdown);
+      await context.reply(randomMessage);
+    }
+  }, intervalTime); // 6000 milliseconds = 6 seconds
 
   try {
     const apiResponse = await mockApiCall(content);
