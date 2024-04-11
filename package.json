@@ -19,8 +19,10 @@
   "dependencies": {
     "@xmtp/grpc-api-client": "^0.2.4",
     "@xmtp/xmtp-js": "^11.2.1",
+    "croner": "^8.0.1",
     "dotenv": "^16.4.5",
     "ethers": "^5.7.2",
+    "node-cron": "^3.0.3",
     "node-fetch": "^3.3.2",
     "typescript": "^5.4.3",
     "viem": "^2.8.16"
