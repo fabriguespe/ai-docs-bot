@@ -4,6 +4,8 @@ Learn about XMTP by chatting with the [Docs](https://xmtp.org/docs/introduction)
 
 ## Getting started
 
+> ⚠️ Ensure you're using `Yarn 4` for dependency management. Check with `yarn --version`.
+
 To install dependencies:
 
 ```bash

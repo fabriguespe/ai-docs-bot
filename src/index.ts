@@ -96,7 +96,7 @@ run(async (context: HandlerContext) => {
     return messages[Math.floor(Math.random() * messages.length)];
   };
 
-  // Set up a periodic message every 6 seconds
+  // Set up a periodic message every 6 seconds test
   const thinkingInterval = setInterval(async () => {
     countdown -= intervalTime / 1000; // Decrease countdown by interval time in seconds
     if (countdown <= 0) {
