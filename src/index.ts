@@ -1,15 +1,12 @@
 import "dotenv/config";
-import { privateKeyToAccount } from "viem/accounts";
-import HandlerContext from "./handler-context";
-import run from "./runner.js";
+import HandlerContext from "./lib/handler-context";
+import run from "./lib/runner.js";
 import fetch from "node-fetch";
 
 async function mockApiCall(query: string) {
-  console.log(
-    `${process.env.KAPA_API_ENDPOINT}?query=${encodeURIComponent(query)}`
-  );
   try {
-    console.log("Fetching from Kapa.ai API...");
+    if (query == "Heartbeat") return "I'm alive";
+    if (process.env.DEBUG) console.log("Fetching from Kapa.ai API...");
     const response = await fetch(
       `${process.env.KAPA_API_ENDPOINT}?query=${encodeURIComponent(query)}`,
       {
@@ -25,8 +22,8 @@ async function mockApiCall(query: string) {
 
     const data = await response.json();
     //@ts-ignore
-    const message = formatForPlainText(data?.answer); // + generateMessageFooter(data?.relevant_sources);
-    console.log("Data from Kapa.ai API:", message);
+    const message = formatForPlainText(data?.answer);
+    console.log("Data from Kapa.ai API:", query, message);
     return message;
   } catch (error) {
     console.error("Failed to fetch from Kapa.ai API:", error);
@@ -57,25 +54,10 @@ function formatForPlainText(response: string): string {
   return plainText;
 }
 
-function generateMessageFooter(
-  sources: Array<{ source_url: string; title: string }>
-): string {
-  let footer = "\n\n---\n**Further Reading:**\n";
-  sources.forEach((source, index) => {
-    footer += `${index + 1}. [${source.title}](${source.source_url})\n`;
-  });
-  return footer;
-}
 run(async (context: HandlerContext) => {
   const { message } = context;
-  const wallet = privateKeyToAccount(process.env.KEY as `0x${string}`);
 
   const { content, senderAddress } = message;
-
-  if (senderAddress?.toLowerCase() === wallet.address?.toLowerCase()) {
-    // safely ignore this message
-    return;
-  }
 
   await new Promise((resolve) => setTimeout(resolve, 1000)); // Send initial thinking message
   await context.reply("Thinking...");
