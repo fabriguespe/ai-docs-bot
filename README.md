@@ -18,6 +18,8 @@ cp .env.example .env
 ```bash
 KEY= # the private key of the bot
 XMTP_ENV= # set to production or dev network
+KAPA_API_ENDPOINT= # kapa api endpoint
+KAPA_API_TOKEN= # kapa api token
 ```
 
 > ⚠️ Bot kit is not compatible with `bun` yet. Use `npm` or `yarn`
