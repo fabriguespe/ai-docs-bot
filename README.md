@@ -1,6 +1,6 @@
 # XMTP Docs AI Bot
 
-Go to [BotKit](https://github.com/fabriguespe/botkit) to learn more
+Go to [BotKit](https://github.com/xmtp/botkit) to learn more
 
 ## Development
 
