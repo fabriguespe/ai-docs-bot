@@ -1,5 +1,5 @@
 {
-  "name": "echo-bot",
+  "name": "ai-docs-bot",
   "type": "module",
   "scripts": {
     "build": "tsc",
