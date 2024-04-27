@@ -9,8 +9,8 @@ Go to [BotKit](https://github.com/xmtp/botkit) to learn more
 To kickstart the tutorial, you'll need to clone the repository containing the bot code. Follow these steps:
 
 ```bash
-git clone https://github.com/fabriguespe/ai-docs-bot.git
-cd ai-docs-bot
+git clone https://github.com/fabriguespe/xmtp-docs-bot.git
+cd xmtp-docs-bot
 # copy env variables template
 cp .env.example .env
 ```
@@ -37,10 +37,6 @@ yarn start
 # to run with hot-reload
 yarn build:watch
 yarn start:watch
-
-# run the echo example
-yarn build:watch
-yarn start:echo
 ```
 
 ## Messaging apps 💬

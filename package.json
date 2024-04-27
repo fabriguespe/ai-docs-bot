@@ -1,5 +1,5 @@
 {
-  "name": "ai-docs-bot",
+  "name": "xmtp-docs-bot",
   "type": "module",
   "scripts": {
     "build": "tsc",
