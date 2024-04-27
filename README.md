@@ -1,44 +1,42 @@
-# XMTP AI Docs Bot
+# XMTP Docs AI Bot
 
-Learn about XMTP by chatting with the [Docs](https://xmtp.org/docs/introduction) through a GPT powered bot.
+Go to [BotKit](https://github.com/fabriguespe/botkit) to learn more
 
-## Getting started
+## Development
 
-> ⚠️ Ensure you're using `Yarn 4` for dependency management. Check with `yarn --version`.
-
-To install dependencies:
+To kickstart the tutorial, you'll need to clone the repository containing the bot code. Follow these steps:
 
 ```bash
-yarn
-```
-
-To run:
-
-```bash
-yarn build
-yarn start
-```
-
-To run with hot-reload:
-
-```bash
-yarn build:watch
-yarn start:watch
-```
-
-### Environment
-
-```bash
+git clone https://github.com/fabriguespe/ai-docs-bot.git
+cd ai-docs-bot
+# copy env variables template
 cp .env.example .env
 ```
 
-then populate the environment variables accordingly
+**Set the variables**
 
 ```bash
-KEY=
-XMTP_ENV=
-KAPA_API_ENDPOINT=
-KAPA_API_TOKEN=
+KEY= # the private key of the bot
+XMTP_ENV= # set to production or dev network
+```
+
+> ⚠️ Bot kit is not compatible with `bun` yet. Use `npm` or `yarn`
+
+```bash
+# install dependencies
+yarn install
+
+# running the bot
+yarn build
+yarn start
+
+# to run with hot-reload
+yarn build:watch
+yarn start:watch
+
+# run the echo example
+yarn build:watch
+yarn start:echo
 ```
 
 ---
